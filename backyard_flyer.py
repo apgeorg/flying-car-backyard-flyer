@@ -17,7 +17,6 @@ class States(Enum):
     LANDING = 4
     DISARMING = 5
 
-
 class BackyardFlyer(Drone):
 
     def __init__(self, connection):
@@ -39,7 +38,7 @@ class BackyardFlyer(Drone):
         """
         This triggers when `MsgID.LOCAL_POSITION` is received and self.local_position contains new data
         """
-        #print("Local Position: {}".format(self.local_position))
+        print("Local Position: {}".format(self.local_position))
 
     def velocity_callback(self):
         """
@@ -71,8 +70,8 @@ class BackyardFlyer(Drone):
                     if np.linalg.norm(self.local_velocity[0:2]) < 1.0:
                         self.landing_transition()
         elif self.flight_state == States.LANDING:
-            if self.global_position[2] - self.global_home[2] < 0.3:
-                if abs(self.local_position[2]) < 0.01:
+            if self.global_position[2] - self.global_home[2] < 0.1:
+                if abs(self.local_position[2]) < 0.3:
                     self.disarming_transition()
         elif self.flight_state == States.DISARMING:
                 if not self.armed:
